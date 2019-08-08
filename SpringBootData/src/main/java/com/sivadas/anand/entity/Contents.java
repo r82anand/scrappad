@@ -1,7 +1,6 @@
 package com.sivadas.anand.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +12,11 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.sivadas.anand.entity.audit.Auditable;
+
 @Entity(name = "Contents")
 @Table(name = "CONTENTS")
-public class Contents implements Serializable {
+public class Contents extends Auditable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -4727218515136333307L;
 	@Id
@@ -24,11 +25,6 @@ public class Contents implements Serializable {
 	@Column(name = "TEXT")
 	@Lob
 	private String content;
-	@Column(name = "CREATED_DATE")
-	private Timestamp createdDate;
-	@Column(name = "CREATED_USER")
-	private Long createdBy;
-
 	@OneToOne(mappedBy = "contents", fetch = FetchType.EAGER, optional = false)
 	private Chapter chapter;
 
@@ -46,22 +42,6 @@ public class Contents implements Serializable {
 
 	public void setContent(final String content) {
 		this.content = content;
-	}
-
-	public Timestamp getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(final Timestamp createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(final Long createdBy) {
-		this.createdBy = createdBy;
 	}
 
 	public Chapter getChapter() {

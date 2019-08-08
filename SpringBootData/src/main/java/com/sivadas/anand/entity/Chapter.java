@@ -1,7 +1,6 @@
 package com.sivadas.anand.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,11 +19,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sivadas.anand.entity.audit.Auditable;
 
 @Entity(name = "Chapter")
 @Table(name = "CHAPTER")
 @NamedQuery(name = "Chapter.findAllChapters", query = "SELECT t FROM Chapter t")
-public class Chapter implements Serializable {
+public class Chapter extends Auditable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 6438779629485768640L;
 
@@ -33,10 +33,6 @@ public class Chapter implements Serializable {
 	private Long id;
 	@Column(name = "TITLE")
 	private String title;
-	@Column(name = "CREATED_DATE")
-	private Timestamp createdDate;
-	@Column(name = "CREATED_USER")
-	private Long createdBy;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "TOPIC_ID")
@@ -68,22 +64,6 @@ public class Chapter implements Serializable {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-
-	public Timestamp getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(final Timestamp createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(final Long createdBy) {
-		this.createdBy = createdBy;
 	}
 
 	public Topic getTopic() {

@@ -1,7 +1,6 @@
 package com.sivadas.anand.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,10 +14,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.sivadas.anand.entity.audit.Auditable;
+
 @Entity(name = "Topic")
 @Table(name = "TOPIC")
 @NamedQuery(name = "Topic.findAllTopics", query = "SELECT t FROM Topic t")
-public class Topic implements Serializable {
+public class Topic extends Auditable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -1326450019307723338L;
 	@Id
@@ -28,10 +29,6 @@ public class Topic implements Serializable {
 	private String title;
 	@Column(name = "DESCRIPTION")
 	private String description;
-	@Column(name = "CREATED_DATE")
-	private Timestamp createdDate;
-	@Column(name = "CREATED_USER")
-	private Long createdBy;
 
 	@OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Chapter> chapters;
@@ -50,22 +47,6 @@ public class Topic implements Serializable {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-
-	public Timestamp getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(final Timestamp createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(final Long createdBy) {
-		this.createdBy = createdBy;
 	}
 
 	public List<Chapter> getChapters() {
